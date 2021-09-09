@@ -3,7 +3,7 @@ part of 'main.dart';
 typedef StringValue = String Function(String);
 
 class Guest {
-  final String id;
+  final int id;
   final String name;
   final String birthdate;
 
@@ -31,17 +31,18 @@ Future<List<Guest>> fetchAlbum() async {
     // then parse the JSON.
     List<dynamic> values = <dynamic>[];
     List<Guest> guests = <Guest>[];
+    debugPrint(response.body);
     values = json.decode(response.body);
     if(values.length>0) {
       for(int i=0; i<values.length; i++) {
-        if(values[i]! == null) {
+        if(values[i] != null) {
           Map<String,dynamic> map = values[i];
           guests.add(Guest.fromJson(map));
           debugPrint('Id-------${map['id']}');
         }
       }
     }
-    debugPrint(guests);
+    debugPrint(guests.toString());
     return guests;
   } else {
     // If the server did not return a 200 OK response,
@@ -74,6 +75,9 @@ class _GuestPageState extends State<GuestPage> {
         child: FutureBuilder<List<Guest>>(
             future: futureGuests,
             builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                throw snapshot.error!;
+              }
               if (snapshot.hasData) {
                 return GridView.builder(
                   itemCount: snapshot.data!.length,

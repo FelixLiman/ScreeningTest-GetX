@@ -2,8 +2,8 @@ part of 'main.dart';
 
 class Event {
   String name;
-  String birthdate;
-  Event(this.name, this.birthdate);
+  String date;
+  Event(this.name, this.date);
 }
 
 class EventPage extends StatefulWidget {
@@ -13,7 +13,13 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
-  List events = [Event("foo", "123"), Event("bar", "123")];
+  List events = [
+    Event("Gathering Event", "15 Sept 2021"),
+    Event("Gala Dinner Event", "16 Sept 2021"),
+    Event("Seminar Event", "18 Sept 2021"),
+    Event("Collaboration Event", "19 Sept 2021"),
+    Event("Webinar Event", "21 Sept 2021")
+  ];
 
   // This widget is the root of your application.
   @override
@@ -29,11 +35,27 @@ class _EventPageState extends State<EventPage> {
             crossAxisCount: 1,
           ),
           itemBuilder: (context, index) => GestureDetector(
-            child: Container(
-              color: Colors.blue,
-              child: Center(
-                child: Text(events[index].name),
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  child: Image(
+                    image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                    color: Colors.blue,
+                    height: 150,
+                    width: 150,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(events[index].name),
+                    Text(events[index].date),
+                  ],
+                )
+              ],
             ),
             onTap: () {
               widget.callback(events[index].name);

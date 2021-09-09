@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage(textFieldController.text)));
                 },
                 child: Center(
-                    child: Text('Pilih Event')
+                    child: Text('Lanjut')
                 ),
               ),
             ],
