@@ -1,7 +1,10 @@
 import 'dart:convert';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:dio/dio.dart';
 part 'login_page.dart';
 part 'home_page.dart';
 part 'guest_page.dart';
@@ -14,7 +17,8 @@ part '../controllers/home_controller.dart';
 
 typedef StringValue = String Function(String);
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
   runApp(MyApp());
 }
 

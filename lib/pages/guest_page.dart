@@ -1,31 +1,13 @@
 part of 'main.dart';
 
 Future<List<Guest>> fetchAlbum() async {
-  final response = await http
-      .get(Uri.parse('http://www.mocky.io/v2/596dec7f0f000023032b8017'));
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    List<dynamic> values = <dynamic>[];
-    List<Guest> guests = <Guest>[];
-    debugPrint(response.body);
-    values = json.decode(response.body);
-    if (values.length > 0) {
-      for (int i = 0; i < values.length; i++) {
-        if (values[i] != null) {
-          Map<String, dynamic> map = values[i];
-          guests.add(Guest.fromJson(map));
-          debugPrint('Id-------${map['id']}');
-        }
-      }
-    }
-    debugPrint(guests.toString());
-    return guests;
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
+  try {
+    Response response;
+    var dio = Dio();
+    response = await dio.get('http://www.mocky.io/v2/596dec7f0f000023032b8017');
+    return (response.data as List).map((e) => Guest.fromJson(e)).toList();
+  } catch (error, stacktrace) {
+    throw Exception("Exception occured: $error stackTrace: $stacktrace");
   }
 }
 
@@ -53,35 +35,40 @@ class _GuestPageState extends State<GuestPage> {
         child: FutureBuilder<List<Guest>>(
             future: futureGuests,
             builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                throw snapshot.error!;
-              }
-              if (snapshot.hasData) {
-                return GridView.builder(
-                  itemCount: snapshot.data!.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    crossAxisCount: 2,
-                  ),
-                  itemBuilder: (context, index) => GestureDetector(
-                    child: Container(
-                      color: Colors.blue,
-                      child: Center(
-                        child: Text(snapshot.data![index].name),
-                      ),
-                    ),
-                    onTap: () {
-                      widget.callback(snapshot.data![index].name);
-                      Get.back();
-                    },
-                  ),
-                );
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                } else {
+                  return guestGridView(snapshot, widget.callback);
+                }
               } else {
-                return Center(child: CircularProgressIndicator());
+                return CircularProgressIndicator();
               }
             }),
       ),
     );
   }
+}
+
+GridView guestGridView(AsyncSnapshot snapshot, StringValue callback) {
+  return GridView.builder(
+    itemCount: snapshot.data!.length,
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisSpacing: 16,
+      mainAxisSpacing: 16,
+      crossAxisCount: 2,
+    ),
+    itemBuilder: (context, index) => GestureDetector(
+      child: Container(
+        color: Colors.blue,
+        child: Center(
+          child: Text(snapshot.data![index].name),
+        ),
+      ),
+      onTap: () {
+        callback(snapshot.data![index].name);
+        Get.back();
+      },
+    ),
+  );
 }
