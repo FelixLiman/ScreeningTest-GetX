@@ -15,10 +15,9 @@ class LoginPage extends StatelessWidget {
             children: [
               TextField(
                 decoration: InputDecoration(
-                  isDense: true,
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter a search term'
-                ),
+                    isDense: true,
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter a search term'),
                 cursorColor: Colors.purple,
                 controller: textFieldController,
               ),
@@ -27,14 +26,11 @@ class LoginPage extends StatelessWidget {
                 style: TextButton.styleFrom(
                     padding: EdgeInsets.all(8),
                     primary: Colors.white,
-                    backgroundColor: Colors.purple
-                ),
+                    backgroundColor: Colors.purple),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage(textFieldController.text)));
+                  Get.to(HomePage(textFieldController.text));
                 },
-                child: Center(
-                    child: Text('Lanjut')
-                ),
+                child: Center(child: Text('Lanjut')),
               ),
             ],
           ),
