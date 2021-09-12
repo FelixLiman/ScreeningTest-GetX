@@ -23,45 +23,48 @@ class _HomePageState extends State<HomePage> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Nama:'),
-                  Text(name)
-                ],
+                children: [Text('Nama:'), Text(name)],
               ),
               SizedBox(height: 16),
               TextButton(
                 style: TextButton.styleFrom(
                     padding: EdgeInsets.all(8),
                     primary: Colors.white,
-                    backgroundColor: Colors.purple
-                ),
+                    backgroundColor: Colors.purple),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (_) => EventPage((event) {
-                        return eventName = event;
-                      })
-                  ));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => EventPage((event) {
+                                setState(() {
+                                  eventName = event;
+                                });
+                                return "";
+                              })));
                 },
                 child: Center(
-                    child: Text(eventName != null ? eventName! : 'Pilih Event')
-                ),
+                    child:
+                        Text(eventName != null ? eventName! : 'Pilih Event')),
               ),
               TextButton(
                 style: TextButton.styleFrom(
                     padding: EdgeInsets.all(8),
                     primary: Colors.white,
-                    backgroundColor: Colors.purple
-                ),
+                    backgroundColor: Colors.purple),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (_) => GuestPage((guest) {
-                        return guestName = guest;
-                      })
-                  ));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => GuestPage((guest) {
+                                setState(() {
+                                  guestName = guest;
+                                });
+                                return "";
+                              })));
                 },
                 child: Center(
-                    child: Text(guestName != null ? guestName! : 'Pilih Guest')
-                ),
+                    child:
+                        Text(guestName != null ? guestName! : 'Pilih Guest')),
               ),
             ],
           ),
