@@ -1,4 +1,4 @@
-part of '../pages/main.dart';
+import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   var _eventName = Rxn<String>().obs;

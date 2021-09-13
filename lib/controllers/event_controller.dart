@@ -1,23 +1,47 @@
-part of '../pages/main.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import '../models/event_model.dart';
 
 class EventController extends GetxController {
-  var _events = [
-    Event("Gathering Event", "15 Sept 2021"),
-    Event("Gala Dinner Event", "16 Sept 2021"),
-    Event("Seminar Event", "18 Sept 2021"),
-    Event("Collaboration Event", "19 Sept 2021"),
-    Event("Webinar Event", "21 Sept 2021")
-  ].obs;
+  var events = [].obs;
 
-  setEvents(List<Event> guests) {
-    _events.value = guests;
+  Future getEvents() async {
+    Box box;
+    try {
+      box = Hive.box('screeningTest');
+    } catch (error) {
+      box = await Hive.openBox('screeningTest');
+      print(error);
+    }
+
+    var evnts = box.get('events');
+    if (evnts != null) {
+      for (Event event in evnts) {
+        events.add(event);
+      }
+    }
   }
 
-  List<Event> getEvents() {
-    return _events.value;
+  addEvent(Event event) async {
+    events.add(event);
+    var box = await Hive.openBox('screeningTest');
+    box.put('events', events.toList());
+    print("To Do Object added $events");
   }
 
-  Event getEvent(int id) {
-    return _events.value[id];
+  onInit() {
+    try {
+      Hive.registerAdapter(EventAdapter());
+    } catch (e) {
+      print(e);
+    }
+    getEvents();
+    addEvent(Event('Event A', ' 1 August 2021'));
+    addEvent(Event('Event B', ' 2 August 2021'));
+    addEvent(Event('Event C', ' 3 August 2021'));
+    addEvent(Event('Event D', ' 4 August 2021'));
+    addEvent(Event('Event E', ' 5 August 2021'));
+    super.onInit();
   }
 }

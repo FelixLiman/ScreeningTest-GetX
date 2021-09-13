@@ -1,4 +1,9 @@
-part of 'main.dart';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import '../controllers/event_controller.dart';
+import '../models/event_model.dart';
+
+typedef StringValue = String Function(String);
 
 class EventPage extends StatelessWidget {
   final EventController c = Get.put(EventController());
@@ -7,29 +12,18 @@ class EventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(() => Scaffold(
         body: Padding(
-      padding: EdgeInsets.all(16),
-      child: FutureBuilder(
-          future: Hive.openBox('events'),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
-              } else {
-                return eventGridView(c, callback);
-              }
-            } else {
-              return CircularProgressIndicator();
-            }
-          }),
-    ));
+            padding: EdgeInsets.all(16),
+            child: c.events.isEmpty
+                ? Center(child: CircularProgressIndicator())
+                : eventGridView(c, callback))));
   }
 }
 
 GridView eventGridView(EventController c, StringValue callback) {
   return GridView.builder(
-    itemCount: c.getEvents().length,
+    itemCount: c.events.length,
     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisSpacing: 16,
       mainAxisSpacing: 16,
@@ -53,14 +47,14 @@ GridView eventGridView(EventController c, StringValue callback) {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(c.getEvent(index).name),
-              Text(c.getEvent(index).date),
+              Text(c.events[index].name),
+              Text(c.events[index].date),
             ],
           )
         ],
       ),
       onTap: () {
-        callback(c.getEvent(index).name);
+        callback(c.events[index].name);
         Get.back();
       },
     ),

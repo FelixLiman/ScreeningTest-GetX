@@ -1,4 +1,6 @@
-part of 'main.dart';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatelessWidget {
   final textFieldController = TextEditingController();

@@ -1,4 +1,5 @@
-part of '../pages/main.dart';
+import 'package:hive/hive.dart';
+part 'event_model.g.dart';
 
 @HiveType(typeId: 0)
 class Event {

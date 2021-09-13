@@ -1,4 +1,8 @@
-part of 'main.dart';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import '../controllers/home_controller.dart';
+import 'event_page.dart';
+import 'guest_page.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController c = Get.put(HomeController());
