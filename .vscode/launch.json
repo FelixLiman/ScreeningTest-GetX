@@ -7,8 +7,7 @@
         {
             "name": "ScreeningTest-GetX",
             "request": "launch",
-            "type": "dart",
-            "program": "lib/pages/main.dart"
+            "type": "dart"
         },
         {
             "name": "ScreeningTest-GetX (profile mode)",
