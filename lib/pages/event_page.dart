@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../controllers/event_controller.dart';
-import '../models/event_model.dart';
 
 typedef StringValue = String Function(String);
 

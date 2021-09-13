@@ -5,7 +5,6 @@ import 'home_page.dart';
 class LoginPage extends StatelessWidget {
   final textFieldController = TextEditingController();
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
