@@ -29,7 +29,7 @@ class LoginPage extends StatelessWidget {
                     primary: Colors.white,
                     backgroundColor: Colors.purple),
                 onPressed: () {
-                  Get.to(HomePage(textFieldController.text));
+                  Get.to(() => HomePage(textFieldController.text));
                 },
                 child: Center(child: Text('Lanjut')),
               ),

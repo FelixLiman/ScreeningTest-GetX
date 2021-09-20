@@ -1,15 +1,21 @@
 import 'package:hive/hive.dart';
+import 'package:ScreeningTest-GetX/hive_helper/hive_types.dart';
+import 'package:ScreeningTest-GetX/hive_helper/hive_adapters.dart';
+import 'package:ScreeningTest-GetX/hive_helper/fields/guest_fields.dart';
+
+
 part 'guest_model.g.dart';
 
-@HiveType(typeId: 1)
-class Guest {
-  @HiveField(0)
+
+@HiveType(typeId: HiveTypes.guest, adapterName: HiveAdapters.guest)
+class Guest extends HiveObject{
+	@HiveField(GuestFields.id)
   final int id;
 
-  @HiveField(1)
+	@HiveField(GuestFields.name)
   final String name;
 
-  @HiveField(2)
+	@HiveField(GuestFields.birthdate)
   final String birthdate;
 
   Guest({required this.id, required this.name, required this.birthdate});

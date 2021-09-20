@@ -29,10 +29,10 @@ class HomePage extends StatelessWidget {
                       primary: Colors.white,
                       backgroundColor: Colors.purple),
                   onPressed: () {
-                    Get.to(EventPage((event) {
-                      c.setEvent(event);
-                      return "";
-                    }));
+                    Get.to(() => EventPage((event) {
+                          c.setEvent(event);
+                          return "";
+                        }));
                   },
                   child: Center(
                     child: Obx(() => Text(
@@ -44,10 +44,10 @@ class HomePage extends StatelessWidget {
                       primary: Colors.white,
                       backgroundColor: Colors.purple),
                   onPressed: () {
-                    Get.to(GuestPage((guest) {
-                      c.setGuest(guest);
-                      return "";
-                    }));
+                    Get.to(() => GuestPage((guest) {
+                          c.setGuest(guest);
+                          return "";
+                        }));
                   },
                   child: Center(
                     child: Obx(() => Text(
